@@ -5,7 +5,8 @@ import 'package:memory/memory_page.dart';
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
-  static const List<int> _numbers = [4, 6, 8, 10];
+  @visibleForTesting
+  static const List<int> numbers = [4, 6, 8, 10];
 
   @override
   Widget build(BuildContext context) {
@@ -18,16 +19,18 @@ class HomePage extends StatelessWidget {
         child: Column(
           children: [
             const Center(
+              key: Key("memory_card_selection_title"),
               child: Text("Wähle die Anzahl der Karten"),
             ),
             const SizedBox(
               height: 49.0,
             ),
             Wrap(
+              key: const Key("memory_card_selection"),
               alignment: WrapAlignment.center,
               spacing: 60,
               runSpacing: 32,
-              children: _numbers
+              children: numbers
                   .map((number) =>
                       _getNumberOfCardsButton(context: context, number: number))
                   .toList(),
@@ -41,6 +44,7 @@ class HomePage extends StatelessWidget {
   Widget _getNumberOfCardsButton(
       {required BuildContext context, required int number}) {
     return MemoryCardWidget(
+      key: Key("memory_card_widget_$number"),
       onTap: () => Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => MemoryPage(numberOfCards: number),
