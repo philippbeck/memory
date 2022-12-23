@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:memory/memory_card_widget.dart';
+import 'package:memory/memory_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -10,26 +12,24 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Memory"),
-        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 21.0),
         child: Column(
           children: [
             const Center(
-              child: Text(
-                "Wähle die Anzahl der Karten",
-                style: TextStyle(fontSize: 24.0),
-              ),
+              child: Text("Wähle die Anzahl der Karten"),
             ),
             const SizedBox(
               height: 49.0,
             ),
             Wrap(
+              alignment: WrapAlignment.center,
               spacing: 60,
               runSpacing: 32,
               children: _numbers
-                  .map((number) => _getNumberOfCardsButton(number: number))
+                  .map((number) =>
+                      _getNumberOfCardsButton(context: context, number: number))
                   .toList(),
             )
           ],
@@ -38,20 +38,15 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _getNumberOfCardsButton({required int number}) {
-    return InkWell(
-      onTap: () {},
-      child: Container(
-        height: 100,
-        width: 100,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: const Color(0xffD9D9D9),
-        ),
-        child: Center(
-          child: Text(number.toString()),
+  Widget _getNumberOfCardsButton(
+      {required BuildContext context, required int number}) {
+    return MemoryCardWidget(
+      onTap: () => Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => MemoryPage(numberOfCards: number),
         ),
       ),
+      text: number.toString(),
     );
   }
 }

@@ -9,6 +9,8 @@ void main() {
 class MemoryApp extends StatelessWidget {
   const MemoryApp({super.key});
 
+  static const _defaultColor = Color(0xff57CDFF);
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
@@ -21,7 +23,13 @@ class MemoryApp extends StatelessWidget {
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
           centerTitle: true,
-          backgroundColor: Color(0xff57CDFF),
+          backgroundColor: _defaultColor,
+        ),
+        textTheme: const TextTheme(
+          bodyMedium: TextStyle(fontSize: 24),
+        ),
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          backgroundColor: _defaultColor,
         ),
       ),
       home: const HomePage(),
