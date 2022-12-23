@@ -14,13 +14,6 @@ class MemoryPage extends StatefulWidget {
 }
 
 class _MemoryPageState extends State<MemoryPage> {
-  static const _colors = [
-    Colors.green,
-    Colors.yellow,
-    Colors.cyan,
-    Colors.deepOrangeAccent,
-    Colors.pinkAccent
-  ];
   late final List<_MemoryCard> _memoryCards;
   _MemoryCard? _currentlySelectedCard;
   int _numberOfTries = 0;
@@ -30,11 +23,15 @@ class _MemoryPageState extends State<MemoryPage> {
   void initState() {
     int middle = widget.numberOfCards ~/ 2;
     _memoryCards = List.generate(
-        widget.numberOfCards,
-        (index) => _MemoryCard(
-            number: index % middle,
-            isOpen: false,
-            backgroundColor: _colors[index % middle]));
+      widget.numberOfCards,
+      (index) {
+        int number = index % middle;
+        return _MemoryCard(
+          id: number,
+          assetImage: "assets/memory_$number.jpg",
+        );
+      },
+    );
     _memoryCards.shuffle();
     super.initState();
   }
@@ -46,7 +43,7 @@ class _MemoryPageState extends State<MemoryPage> {
       setState(() {
         _currentlySelectedCard = null;
         _numberOfTries++;
-        if (selectedCard.number == card.number) {
+        if (selectedCard.id == card.id) {
           card.isOpen = true;
           _successfulPairs++;
         } else {
@@ -116,8 +113,14 @@ class _MemoryPageState extends State<MemoryPage> {
           .map(
             (card) => MemoryCardWidget(
               onTap: card.isOpen ? null : () => _selectMemoryCard(card: card),
-              text: card.isOpen ? card.number.toString() : "?",
-              color: card.isOpen ? card.backgroundColor : null,
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: Image.asset(
+                  card.isOpen
+                      ? card.assetImage
+                      : "assets/memory_background.jpg",
+                ).image,
+              ),
             ),
           )
           .toList(),
@@ -141,11 +144,11 @@ class _MemoryPageState extends State<MemoryPage> {
 
 class _MemoryCard {
   _MemoryCard({
-    required this.number,
-    required this.isOpen,
-    required this.backgroundColor,
+    required this.id,
+    this.isOpen = false,
+    required this.assetImage,
   });
-  int number;
+  int id;
   bool isOpen;
-  Color backgroundColor;
+  String assetImage;
 }

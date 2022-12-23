@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 class MemoryCardWidget extends StatelessWidget {
   const MemoryCardWidget({
     required this.onTap,
-    required this.text,
-    this.color,
+    this.text,
+    this.image,
     Key? key,
   }) : super(key: key);
 
   final VoidCallback? onTap;
-  final String text;
-  final Color? color;
+  final String? text;
+  final DecorationImage? image;
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +21,11 @@ class MemoryCardWidget extends StatelessWidget {
         width: 100,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: color ?? const Color(0xffD9D9D9),
+          color: const Color(0xffD9D9D9),
+          image: image,
         ),
         child: Center(
-          child: Text(text),
+          child: Text(text ?? ""),
         ),
       ),
     );
