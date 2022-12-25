@@ -14,8 +14,8 @@ class MemoryPage extends StatefulWidget {
 }
 
 class _MemoryPageState extends State<MemoryPage> {
-  late final List<_MemoryCard> _memoryCards;
-  _MemoryCard? _currentlySelectedCard;
+  late final List<MemoryCard> _memoryCards;
+  MemoryCard? _currentlySelectedCard;
   int _numberOfTries = 0;
   int _successfulPairs = 0;
 
@@ -26,7 +26,7 @@ class _MemoryPageState extends State<MemoryPage> {
       widget.numberOfCards,
       (index) {
         int number = index % middle;
-        return _MemoryCard(
+        return MemoryCard(
           id: number,
           assetImage: "assets/memory_$number.jpg",
         );
@@ -36,8 +36,8 @@ class _MemoryPageState extends State<MemoryPage> {
     super.initState();
   }
 
-  void _selectMemoryCard({required _MemoryCard card}) {
-    _MemoryCard? selectedCard = _currentlySelectedCard;
+  void _selectMemoryCard({required MemoryCard card}) {
+    MemoryCard? selectedCard = _currentlySelectedCard;
     // Check whether a card was already selected
     if (selectedCard != null) {
       setState(() {
@@ -96,8 +96,9 @@ class _MemoryPageState extends State<MemoryPage> {
           const SizedBox(
             height: 79.0,
           ),
-          Text("Paare: $_successfulPairs"),
-          Text("Versuche: $_numberOfTries"),
+          Text(key: const Key("memory_page_pairs"), "Paare: $_successfulPairs"),
+          Text(
+              key: const Key("memory_page_tries"), "Versuche: $_numberOfTries"),
         ],
       ),
       floatingActionButton: _getResetButton(),
@@ -112,15 +113,8 @@ class _MemoryPageState extends State<MemoryPage> {
       children: _memoryCards
           .map(
             (card) => MemoryCardWidget(
-              onTap: card.isOpen ? null : () => _selectMemoryCard(card: card),
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: Image.asset(
-                  card.isOpen
-                      ? card.assetImage
-                      : "assets/memory_background.jpg",
-                ).image,
-              ),
+              card: card,
+              selectMemoryCard: _selectMemoryCard,
             ),
           )
           .toList(),
@@ -142,8 +136,8 @@ class _MemoryPageState extends State<MemoryPage> {
   }
 }
 
-class _MemoryCard {
-  _MemoryCard({
+class MemoryCard {
+  MemoryCard({
     required this.id,
     this.isOpen = false,
     required this.assetImage,

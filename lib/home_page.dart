@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:memory/memory_card_widget.dart';
 import 'package:memory/memory_page.dart';
 
 class HomePage extends StatelessWidget {
@@ -43,14 +42,24 @@ class HomePage extends StatelessWidget {
 
   Widget _getNumberOfCardsButton(
       {required BuildContext context, required int number}) {
-    return MemoryCardWidget(
+    return InkWell(
       key: Key("memory_card_widget_$number"),
       onTap: () => Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => MemoryPage(numberOfCards: number),
         ),
       ),
-      text: number.toString(),
+      child: Container(
+        height: 100,
+        width: 100,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: const Color(0xffD9D9D9),
+        ),
+        child: Center(
+          child: Text(number.toString()),
+        ),
+      ),
     );
   }
 }
