@@ -31,6 +31,16 @@ class MemoryApp extends StatelessWidget {
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
           backgroundColor: _defaultColor,
         ),
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            backgroundColor: const Color(0xffD9D9D9),
+            textStyle: const TextStyle(fontSize: 24, color: Colors.black),
+            fixedSize: const Size(100, 100),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+          ),
+        ),
       ),
       home: const HomePage(),
     );
