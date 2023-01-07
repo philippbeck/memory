@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:memory/memory_page.dart';
+import 'package:memory/models/memory_card.dart';
 
 class MemoryCardWidget extends StatelessWidget {
   const MemoryCardWidget({
@@ -24,9 +24,7 @@ class MemoryCardWidget extends StatelessWidget {
           image: DecorationImage(
             fit: BoxFit.cover,
             image: Image.asset(
-              card.isOpen
-                  ? card.assetImage
-                  : "assets/memory_background.jpg",
+              card.isOpen ? card.assetImage : "assets/memory_background.jpg",
             ).image,
           ),
         ),

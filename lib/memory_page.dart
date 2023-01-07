@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:memory/memory_card_widget.dart';
+import 'package:memory/models/memory_card.dart';
 
 class MemoryPage extends StatefulWidget {
   const MemoryPage({
@@ -134,15 +135,4 @@ class _MemoryPageState extends State<MemoryPage> {
       ),
     );
   }
-}
-
-class MemoryCard {
-  MemoryCard({
-    required this.id,
-    this.isOpen = false,
-    required this.assetImage,
-  });
-  int id;
-  bool isOpen;
-  String assetImage;
 }
