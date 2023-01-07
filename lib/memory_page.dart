@@ -39,32 +39,38 @@ class _MemoryPageState extends State<MemoryPage> {
 
   void _selectMemoryCard({required MemoryCard card}) {
     MemoryCard? selectedCard = _currentlySelectedCard;
-    // Check whether a card was already selected
-    if (selectedCard != null) {
-      setState(() {
-        _currentlySelectedCard = null;
-        _numberOfTries++;
-        if (selectedCard.id == card.id) {
-          card.isOpen = true;
-          _successfulPairs++;
-        } else {
-          card.isOpen = true;
-          Future.delayed(const Duration(milliseconds: 500), () {
-            if (mounted) {
-              setState(() {
-                card.isOpen = false;
-                selectedCard.isOpen = false;
-              });
-            }
-          });
-        }
-      });
-    } else {
+    if (selectedCard == null) {
       // First card is selected.
       // Show the value and set as currently selected card.
       setState(() {
         _currentlySelectedCard = card;
         card.isOpen = true;
+      });
+      return;
+    }
+
+    // A card was already selected
+    setState(() {
+      _currentlySelectedCard = null;
+      _numberOfTries++;
+    });
+
+    if (selectedCard.id == card.id) {
+      setState(() {
+        card.isOpen = true;
+        _successfulPairs++;
+      });
+    } else {
+      setState(() {
+        card.isOpen = true;
+      });
+      Future.delayed(const Duration(milliseconds: 500), () {
+        if (mounted) {
+          setState(() {
+            card.isOpen = false;
+            selectedCard.isOpen = false;
+          });
+        }
       });
     }
   }
